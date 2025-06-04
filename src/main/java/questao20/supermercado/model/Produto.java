@@ -44,4 +44,12 @@ public class Produto {
    public void setQuantidadeEmEstoque(Integer quantidadeEmEstoque) {
       this.quantidadeEmEstoque = quantidadeEmEstoque;
    }
+
+   @Override
+   public String toString() {
+      return "Produto{" +
+              "preco=" + preco +
+              ", nome='" + nome + '\'' +
+              '}';
+   }
 }
