@@ -3,13 +3,29 @@ package questao20.supermercado.model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Pedido {
-    private static final Logger log = LoggerFactory.getLogger(Pedido.class);
     private List<Item> listaDeItens;
     private Double valorTotalDoPedido = 0.0;
+
+    public Double retornarTroco(Double valorRecebido){
+        Double troco = 0.0;
+        if (valorRecebido>this.getValorTotalDoPedido()){
+            troco = valorRecebido - this.getValorTotalDoPedido();
+        }
+        if (troco.equals(0.0)){
+           System.out.println("Sem troco");
+        }
+        return troco;
+    }
+
+
+
+
 
     public void calculaValorTotal(){
         listaDeItens.forEach(item -> {
@@ -22,7 +38,7 @@ public class Pedido {
         return Boolean.TRUE;
     }
     public void imprimePedido(){
-        log.info(this.toString());
+    System.out.println(toString());
     }
     public void imprimeValorTotal(){
         log.info(this.getValorTotalDoPedido().toString());
