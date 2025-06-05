@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Pedido {
     private static final Logger log = LoggerFactory.getLogger(Pedido.class);
@@ -11,10 +12,14 @@ public class Pedido {
     private Double valorTotalDoPedido = 0.0;
 
     public void calculaValorTotal(){
-
+        listaDeItens.forEach(item -> {
+            item.defineValorTotal();
+            this.valorTotalDoPedido += item.getValorDoItem();
+        });
     }
     public Boolean adicionaItemNaLista(Produto produto, Integer quantidade){
-
+        listaDeItens.add(new Item(produto,quantidade));
+        return Boolean.TRUE;
     }
     public void imprimePedido(){
         log.info(this.toString());
@@ -23,16 +28,17 @@ public class Pedido {
         log.info(this.getValorTotalDoPedido().toString());
     }
     public void adicionaItem(){
-
     }
     public String recebeNomeDoTeclado(){
-        return listaDeItens.stream().findAny().orElseThrow()
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
     }
     public Integer recebeQuantidadeDoTeclado(){
-
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
     }
     public void limparCarrinho(){
-
+        listaDeItens.clear();
     }
 
     public List<Item> getListaDeItens() {
