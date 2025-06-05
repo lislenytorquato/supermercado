@@ -11,7 +11,7 @@ public class Item {
         this.quantidade = quantidade;
     }
     public void defineValorTotal(){
-
+           this.valorDoItem = this.produto.getPreco()* this.quantidade;
     }
 
     public Produto getProduto() {

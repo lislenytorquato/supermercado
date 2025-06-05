@@ -10,11 +10,11 @@ import java.util.List;
 public class Estoque {
 
     private static final Logger log = LoggerFactory.getLogger(Estoque.class);
-    private Integer id = 1;
+    private final Integer id = 1;
     private List<Produto> listaDeProdutos;
 
-    public void inicializaEstoque(){
-        imPrimeCatalogoDeEstoque();
+    public  static Estoque inicializaEstoque(){
+        return new Estoque();
     }
     public Produto encontraProduto(String nome) throws ProdutoException {
         return listaDeProdutos.stream()
