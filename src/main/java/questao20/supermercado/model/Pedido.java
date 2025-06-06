@@ -41,7 +41,7 @@ public class Pedido {
     System.out.println(toString());
     }
     public void imprimeValorTotal(){
-        log.info(this.getValorTotalDoPedido().toString());
+        System.out.println(this.getValorTotalDoPedido());
     }
     public void adicionaItem(){
     }
