@@ -9,12 +9,11 @@ import java.util.List;
 
 public class Estoque {
 
-    private static final Logger log = LoggerFactory.getLogger(Estoque.class);
     private final Integer id = 1;
     private List<Produto> listaDeProdutos;
 
-    public  static Estoque inicializaEstoque(){
-        return new Estoque();
+    public void inicializaEstoque(){
+        this.imPrimeCatalogoDeEstoque();
     }
     public Produto encontraProduto(String nome) throws ProdutoException {
         return listaDeProdutos.stream()
@@ -32,7 +31,7 @@ public class Estoque {
          return Boolean.TRUE;
     }
     public void imPrimeCatalogoDeEstoque(){
-        log.info(listaDeProdutos.stream().toString());
+        System.out.println(listaDeProdutos.stream());
     }
     public Boolean darBaixaEmEstoque(String nome, Integer quantidadePraDarBaixa) throws ProdutoException {
         Boolean darBaixaEmEstoque = Boolean.FALSE;

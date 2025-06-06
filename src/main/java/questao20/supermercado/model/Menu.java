@@ -1,29 +1,36 @@
 package questao20.supermercado.model;
 
-import java.util.Scanner;
+import org.springframework.beans.factory.annotation.Autowired;
+import questao20.supermercado.implement.EntradaImplement;
+import questao20.supermercado.implement.SaidaImplement;
 
 public class Menu {
 
+    @Autowired
+    EntradaImplement entradaImplement;
+    @Autowired
+    SaidaImplement saidaImplement;
+
     public void controlaMenu(){
-        System.out.println("Escolha as opções do menu");
-        System.out.println("1- Controlar Menu");
-        System.out.println("2- Mostrar Estoque");
+        saidaImplement.imprimir("Escolha as opções do menu");
+        saidaImplement.imprimir("1- Controlar Menu");
+        saidaImplement.imprimir("2- Mostrar Estoque");
         switchCase();
     }
 
     public void mostraEstoque(){
-        Estoque.inicializaEstoque().imPrimeCatalogoDeEstoque();
-
+        Estoque estoque = new Estoque();
+        estoque.inicializaEstoque();
     }
     public void switchCase (){
-         Scanner scanner = new Scanner(System.in);
-        switch (scanner.nextInt()){
+        int opcao = entradaImplement.lerInt();
+        switch (opcao){
             case 1:
                 controlaMenu();
             case 2:
                 mostraEstoque();
             default:
-                System.out.println("opção inválida");
+                saidaImplement.imprimir("opção inválida");
         }
     }
 }
