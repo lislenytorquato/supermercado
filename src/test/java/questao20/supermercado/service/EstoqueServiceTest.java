@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import questao20.supermercado.implement.EntradaImplement;
 import questao20.supermercado.implement.SaidaImplement;
+import questao20.supermercado.model.Estoque;
 import questao20.supermercado.model.Menu;
 
 import java.io.ByteArrayOutputStream;
@@ -18,31 +19,21 @@ import java.util.Arrays;
 public class EstoqueServiceTest {
 
     @InjectMocks
-    EstoqueService estoqueService;
+    private EstoqueService estoqueService;
 
     @Mock
-    EntradaImplement entradaImplement;
+    private Menu menu;
 
     @Mock
-    SaidaImplement saidaImplement;
+    private Estoque estoque;
 
     @Test
     @DisplayName("1- deve exibir menu quando entrada eh um")
     void deveExibirMenuQuandoEntradaEhUm(){
-        String primeiraLinha = "Escolha as opções do menu";
-        String segundaLinha = "1- Controlar Menu";
-        String terceiraLinha = "2- Mostrar Estoque";
-        Menu menu = new Menu();
-        menu.controlaMenu();
-        Mockito.doNothing().when(saidaImplement).imprimir(primeiraLinha);
-        Mockito.when(entradaImplement.lerInt()).thenReturn(1);
-        estoqueService.exibirMenu();
 
-        Mockito.verify(entradaImplement,Mockito.times(1));
-        Mockito.verify(saidaImplement).imprimir(primeiraLinha);
-
-
-
+        Mockito.doNothing().when(menu).controlaMenu();
+         estoqueService.exibirMenu();
+        Mockito.verify(menu, Mockito.times(1)).controlaMenu();
     }
 
 }
