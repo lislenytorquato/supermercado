@@ -32,11 +32,14 @@ public class EstoqueServiceTest {
         String primeiraLinha = "Escolha as opções do menu";
         String segundaLinha = "1- Controlar Menu";
         String terceiraLinha = "2- Mostrar Estoque";
-        Mockito.when(saidaImplement.imprimir(primeiraLinha)).
+        Menu menu = new Menu();
+        menu.controlaMenu();
+        Mockito.doNothing().when(saidaImplement).imprimir(primeiraLinha);
         Mockito.when(entradaImplement.lerInt()).thenReturn(1);
         estoqueService.exibirMenu();
 
         Mockito.verify(entradaImplement,Mockito.times(1));
+        Mockito.verify(saidaImplement).imprimir(primeiraLinha);
 
 
 
