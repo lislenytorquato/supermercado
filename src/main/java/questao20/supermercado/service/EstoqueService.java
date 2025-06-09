@@ -1,16 +1,24 @@
 package questao20.supermercado.service;
 
+import org.springframework.stereotype.Service;
 import questao20.supermercado.exception.ProdutoException;
 import questao20.supermercado.model.Estoque;
 import questao20.supermercado.model.Menu;
 import questao20.supermercado.model.Produto;
 
+@Service
 public class EstoqueService {
 
-    Estoque estoque;
+    private final Estoque estoque;
+    private final Menu menu;
+
+    public EstoqueService(Estoque estoque, Menu menu){
+       this.estoque = estoque;
+       this.menu = menu;
+    }
 
     public void exibirMenu(){
-        Menu menu = new Menu();
+
         menu.controlaMenu();
     }
     public void criarEstoque(Produto produtoNovo){
