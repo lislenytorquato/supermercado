@@ -12,6 +12,7 @@ public class MenuTestHelper {
     public static final String TERCEIRA_LINHA = "2- Mostrar Estoque";
     public static final String QUARTA_LINHA = "3- Sair";
     public static final String CASE_3_RESPOSTA = "Saindo...";
+    public static final String DEFAULT_RESPOSTA ="opção inválida";
 
 
     public static void menuDoNothingWhen(SaidaImplement saidaImplement){

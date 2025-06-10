@@ -67,6 +67,8 @@ public class MenuTest {
     @DisplayName("1- deve mostrar mensagem default quando a opcao eh invalida")
     void deveMostrarOpcaoInvalida(){
         menuDoNothingWhen(saidaImplement);
-        
+        when(entradaImplement.lerInt()).thenReturn(4);
+        doNothing().when(saidaImplement).imprimir(DEFAULT_RESPOSTA);
+
     }
 }
