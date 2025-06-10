@@ -5,13 +5,19 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import questao20.supermercado.implement.EntradaImplement;
 import questao20.supermercado.implement.SaidaImplement;
+import questao20.supermercado.model.Estoque;
 import questao20.supermercado.model.Menu;
+import questao20.supermercado.model.Produto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
+import static questao20.supermercado.helper.MenuTestHelper.*;
+import static questao20.supermercado.helper.MenuTestHelper.verificarMenu;
 
 @ExtendWith(MockitoExtension.class)
 public class MenuTest {
@@ -25,20 +31,42 @@ public class MenuTest {
     @Mock
     SaidaImplement saidaImplement;
 
+    @Mock
+    Estoque estoque;
+
+
     @Test
-    @DisplayName("1- deve controlar menu")
-    void deveControlarMenu(){
-        String primeiraLinha = "Escolha as opções do menu";
-        String segundaLinha = "1- Controlar Menu";
-        String terceiraLinha = "2- Mostrar Estoque";
-        doNothing().when(saidaImplement).imprimir(primeiraLinha);
-        doNothing().when(saidaImplement).imprimir(segundaLinha);
-        doNothing().when(saidaImplement).imprimir(terceiraLinha);
+    @DisplayName("1- deve escolher controlar menu e escolher sair")
+    void deveControlarMenuEDepoisSair(){
+
+        menuDoNothingWhen(saidaImplement);
         when(entradaImplement.lerInt()).thenReturn(1);
+        doNothing().when(saidaImplement).imprimir(CASE_3_RESPOSTA);
+        when(entradaImplement.lerInt()).thenReturn(3);
         menu.controlaMenu();
-        verify(saidaImplement,times(1)).imprimir(primeiraLinha);
-        verify(saidaImplement,times(1)).imprimir(segundaLinha);
-        verify(saidaImplement,times(1)).imprimir(terceiraLinha);
-        verify(entradaImplement,times(1)).lerInt();
+        verificarMenu(saidaImplement, entradaImplement);
+        verify(saidaImplement, times(1)).imprimir(CASE_3_RESPOSTA);
+
+    }
+
+    @Test
+    @DisplayName("2-deve escolher mostrar estoque")
+    void deveMostrarEstoque(){
+
+        menuDoNothingWhen(saidaImplement);
+        when(entradaImplement.lerInt()).thenReturn(2);
+      doNothing().when(estoque).inicializaEstoque();
+        menu.controlaMenu();
+
+      verificarMenu(saidaImplement,entradaImplement);
+       verify(entradaImplement,times(1)).lerInt();
+        verify(estoque,times(1)).inicializaEstoque();
+    }
+
+    @Test
+    @DisplayName("1- deve mostrar mensagem default quando a opcao eh invalida")
+    void deveMostrarOpcaoInvalida(){
+        menuDoNothingWhen(saidaImplement);
+        
     }
 }

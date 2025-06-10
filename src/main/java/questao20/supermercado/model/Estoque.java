@@ -2,15 +2,22 @@ package questao20.supermercado.model;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import questao20.supermercado.exception.ProdutoException;
+import questao20.supermercado.implement.SaidaImplement;
 
 import java.util.List;
 
-
+@Component
 public class Estoque {
 
     private final Integer id = 1;
     private List<Produto> listaDeProdutos;
+    private final SaidaImplement saidaImplement;
+
+    public Estoque(SaidaImplement saidaImplement) {
+        this.saidaImplement = saidaImplement;
+    }
 
     public void inicializaEstoque(){
         this.imPrimeCatalogoDeEstoque();
@@ -31,7 +38,8 @@ public class Estoque {
          return Boolean.TRUE;
     }
     public void imPrimeCatalogoDeEstoque(){
-        System.out.println(listaDeProdutos.stream());
+        saidaImplement.imprimir(listaDeProdutos.stream().toString());
+
     }
     public Boolean darBaixaEmEstoque(String nome, Integer quantidadePraDarBaixa) throws ProdutoException {
         Boolean darBaixaEmEstoque = Boolean.FALSE;
