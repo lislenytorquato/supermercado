@@ -1,5 +1,6 @@
 package questao20.supermercado.component;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,11 +65,15 @@ public class MenuTest {
     }
 
     @Test
-    @DisplayName("1- deve mostrar mensagem default quando a opcao eh invalida")
+    @DisplayName("3- deve mostrar mensagem default quando a opcao eh invalida")
     void deveMostrarOpcaoInvalida(){
         menuDoNothingWhen(saidaImplement);
         when(entradaImplement.lerInt()).thenReturn(4);
         doNothing().when(saidaImplement).imprimir(DEFAULT_RESPOSTA);
+        menu.controlaMenu();
+
+        verificarMenu(saidaImplement,entradaImplement);
+        verify(saidaImplement,times(1)).imprimir(DEFAULT_RESPOSTA);
 
     }
 }
