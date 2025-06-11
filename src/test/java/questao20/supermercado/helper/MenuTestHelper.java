@@ -7,10 +7,10 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.doNothing;
 
 public class MenuTestHelper {
-    public static final String PRIMEIRA_LINHA = "Escolha as opções do menu";
-    public static final String SEGUNDA_LINHA = "1- Controlar Menu";
-    public static final String TERCEIRA_LINHA = "2- Mostrar Estoque";
-    public static final String QUARTA_LINHA = "3- Sair";
+    private static final String PRIMEIRA_LINHA = "Escolha as opções do menu";
+    private static final String SEGUNDA_LINHA = "1- Controlar Menu";
+    private static final String TERCEIRA_LINHA = "2- Mostrar Estoque";
+    private static final String QUARTA_LINHA = "3- Sair";
     public static final String CASE_3_RESPOSTA = "Saindo...";
     public static final String DEFAULT_RESPOSTA ="opção inválida";
 

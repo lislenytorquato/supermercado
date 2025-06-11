@@ -6,13 +6,14 @@ import org.springframework.stereotype.Component;
 import questao20.supermercado.exception.ProdutoException;
 import questao20.supermercado.implement.SaidaImplement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class Estoque {
 
     private final Integer id = 1;
-    private List<Produto> listaDeProdutos;
+    private final List<Produto> listaDeProdutos = new ArrayList<>();
     private final SaidaImplement saidaImplement;
 
     public Estoque(SaidaImplement saidaImplement) {
