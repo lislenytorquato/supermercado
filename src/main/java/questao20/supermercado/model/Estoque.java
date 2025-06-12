@@ -1,7 +1,5 @@
 package questao20.supermercado.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import questao20.supermercado.exception.ProdutoException;
 import questao20.supermercado.implement.SaidaImplement;
@@ -61,7 +59,6 @@ public class Estoque {
     }
     public Integer getQuantidadeAtualEmEstoque(Produto produto){
         return produto.getQuantidadeEmEstoque();
-
     }
     public Integer getPosicaoDoProdutoNaLista(Produto produto) throws ProdutoException {
 
