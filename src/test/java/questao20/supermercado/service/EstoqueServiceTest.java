@@ -33,6 +33,9 @@ public class EstoqueServiceTest {
     @Mock
     private Estoque estoque;
 
+    @Mock
+    private SaidaImplement saidaImplement;
+
     @Test
     @DisplayName("1- deve exibir menu quando entrada eh um")
     void deveExibirMenuQuandoEntradaEhUm(){
@@ -65,7 +68,7 @@ public class EstoqueServiceTest {
     }
 
     @Test
-    @DisplayName("3- deve encontrar produto por id no estoque")
+    @DisplayName("4- deve encontrar produto por id no estoque")
     void deveEncontrarProdutoPorIdNoEstoque() throws ProdutoException {
         Produto produto = new Produto(ID_PRODUTO_1,NOME_PRODUTO_1,PRECO_PRODUTO_1,QTD_ESTOQUE_PRODUTO_1);
         when(estoque.encontraProduto(ID_PRODUTO_1)).thenReturn(produto);
@@ -73,4 +76,43 @@ public class EstoqueServiceTest {
 
         Assertions.assertEquals(produto,produtoEncontrado);
     }
+
+    @Test
+    @DisplayName("5- deve dar baixa em estoque por nome do produto ")
+    void deveDarBaixarEstoquePorNomeDoProduto() throws ProdutoException {
+        Produto produto = new Produto(ID_PRODUTO_1,NOME_PRODUTO_1,PRECO_PRODUTO_1,QTD_ESTOQUE_PRODUTO_1);
+        when(estoque.darBaixaEmEstoque(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_DIFERENTE_A_QTD_ESTOQUE_PRODUTO_1)).thenReturn(Boolean.TRUE);
+        estoqueService.darBaixaEmEstoquePorNomeDoProduto(NOME_PRODUTO_1, QTD_PARA_DAR_BAIXA_DIFERENTE_A_QTD_ESTOQUE_PRODUTO_1);
+
+        verify(estoque,times(1)).darBaixaEmEstoque(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_DIFERENTE_A_QTD_ESTOQUE_PRODUTO_1);
+
+    }
+
+    @Test
+    @DisplayName("5- deve dar baixa em estoque por nome do produto ")
+    void deveDarBaixarEstoquePorIdDoProduto() throws ProdutoException {
+        Produto produto = new Produto(ID_PRODUTO_1,NOME_PRODUTO_1,PRECO_PRODUTO_1,QTD_ESTOQUE_PRODUTO_1);
+        when(estoque.darBaixaEmEstoque(ID_PRODUTO_1,QTD_PARA_DAR_BAIXA_DIFERENTE_A_QTD_ESTOQUE_PRODUTO_1)).thenReturn(Boolean.TRUE);
+        estoqueService.darBaixaEmEstoquePorIdDoProduto(Integer.toString(ID_PRODUTO_1), QTD_PARA_DAR_BAIXA_DIFERENTE_A_QTD_ESTOQUE_PRODUTO_1);
+
+        verify(estoque,times(1)).darBaixaEmEstoque(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_DIFERENTE_A_QTD_ESTOQUE_PRODUTO_1);
+
+    }
+
+    @Test
+    @DisplayName("5- deve retornar previsao do produto na lista ")
+    void deveRetornarPrevisaoDoProdutoNaLista() throws ProdutoException {
+
+        Produto produto = new Produto(ID_PRODUTO_1,NOME_PRODUTO_1,PRECO_PRODUTO_1,QTD_ESTOQUE_PRODUTO_1);
+        when(estoque.getPosicaoDoProdutoNaLista(produto)).thenReturn(ID_ESTOQUE-1);
+        Integer posicaoDoProdutoNaLista = estoqueService.retornarPosicaoDoProdutoNaLista(produto);
+
+        Assertions.assertEquals(0,posicaoDoProdutoNaLista);
+
+    }
+
+    @Test
+    @DisplayName("5- ")
+
+
 }

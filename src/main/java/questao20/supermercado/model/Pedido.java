@@ -1,11 +1,6 @@
 package questao20.supermercado.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Pedido {
@@ -22,11 +17,6 @@ public class Pedido {
         }
         return troco;
     }
-
-
-
-
-
     public void calculaValorTotal(){
         listaDeItens.forEach(item -> {
             item.defineValorTotal();

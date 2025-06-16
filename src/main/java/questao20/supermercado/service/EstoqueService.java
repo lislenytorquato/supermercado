@@ -37,9 +37,21 @@ public class EstoqueService {
     }
     public void darBaixaEmEstoquePorNomeDoProduto(String nome, Integer quantidadePraDarBaixa) throws ProdutoException {
         if (estoque.darBaixaEmEstoque(nome,quantidadePraDarBaixa)){
-
+            saidaImplement.imprimir(nome+ "saiu do estoque...");
         }
     }
+    public void darBaixaEmEstoquePorIdDoProduto(String id, Integer quantidadePraDarBaixa) throws ProdutoException {
+        if (estoque.darBaixaEmEstoque(id,quantidadePraDarBaixa)){
+            saidaImplement.imprimir(id+ "saiu do estoque...");
+        }
+    }
+
+    public Integer retornarPosicaoDoProdutoNaLista(Produto produto) throws ProdutoException {
+        return estoque.getPosicaoDoProdutoNaLista(produto);
+    }
+
+
+
 
 
 
