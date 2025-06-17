@@ -1,6 +1,7 @@
 package questao20.supermercado.model;
 
 import org.springframework.stereotype.Component;
+import questao20.supermercado.implement.EntradaImplement;
 import questao20.supermercado.implement.SaidaImplement;
 
 import java.util.List;
@@ -11,11 +12,14 @@ public class Pedido {
     private List<Item> listaDeItens;
     private Double valorTotalDoPedido = 0.0;
     private SaidaImplement saidaImplement;
+    private EntradaImplement entradaImplement;
 
-    public Pedido(List<Item> listaDeItens, Double valorTotalDoPedido, SaidaImplement saidaImplement) {
+    public Pedido(List<Item> listaDeItens, Double valorTotalDoPedido,
+                  SaidaImplement saidaImplement, EntradaImplement entradaImplement) {
         this.listaDeItens = listaDeItens;
         this.valorTotalDoPedido = valorTotalDoPedido;
         this.saidaImplement = saidaImplement;
+        this.entradaImplement = entradaImplement;
     }
 
     public Pedido(){
@@ -43,21 +47,20 @@ public class Pedido {
         return Boolean.TRUE;
     }
     public void imprimePedido(){
-    System.out.println(toString());
+    saidaImplement.imprimir(this.listaDeItens.stream().toString());
+    saidaImplement.imprimir(this.getValorTotalDoPedido());
     }
     public void imprimeValorTotal(){
-        System.out.println(this.getValorTotalDoPedido());
+        saidaImplement.imprimir(this.getValorTotalDoPedido());
     }
     public void adicionaItem(Item item){
         listaDeItens.add(item);
     }
     public String recebeNomeDoTeclado(){
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        return entradaImplement.lerString();
     }
     public Integer recebeQuantidadeDoTeclado(){
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
+        return entradaImplement.lerInt();
     }
     public void limparCarrinho(){
         listaDeItens.clear();
@@ -79,11 +82,5 @@ public class Pedido {
         this.valorTotalDoPedido = valorTotalDoPedido;
     }
 
-    @Override
-    public String toString() {
-        return "Pedido{" +
-                "listaDeItens=" + listaDeItens +
-                ", valorTotalDoPedido=" + valorTotalDoPedido +
-                '}';
-    }
+
 }
