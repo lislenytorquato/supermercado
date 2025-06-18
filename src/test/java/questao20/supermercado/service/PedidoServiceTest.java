@@ -7,7 +7,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import questao20.supermercado.helper.PedidoTestHelper;
+import questao20.supermercado.model.Item;
 import questao20.supermercado.model.Pedido;
+import questao20.supermercado.model.Produto;
+
+import java.util.List;
+
+import static questao20.supermercado.helper.PedidoTestHelper.*;
+import static questao20.supermercado.helper.PedidoTestHelper.ITEM_1_ID_PRODUTO;
+import static questao20.supermercado.helper.PedidoTestHelper.ITEM_1_NOME_PRODUTO;
+import static questao20.supermercado.helper.PedidoTestHelper.ITEM_1_PRECO_PRODUTO;
+import static questao20.supermercado.helper.PedidoTestHelper.ITEM_1_QUANTIDADE;
+import static questao20.supermercado.helper.PedidoTestHelper.ITEM_1_QUANTIDADE_EM_ESTOQUE_PRODUTO;
 
 @ExtendWith(MockitoExtension.class)
 public class PedidoServiceTest {
@@ -111,4 +123,28 @@ public class PedidoServiceTest {
         Assertions.assertEquals(1, notasDoTroco1);
         Assertions.assertEquals(2, notasDoTroco2);
     }
+
+    @Test
+    @DisplayName("11- deve criar pedido")
+    void deveCriarPedido(){
+        Produto produto1 = new Produto(ITEM_1_ID_PRODUTO,
+                ITEM_1_NOME_PRODUTO,
+                ITEM_1_PRECO_PRODUTO,
+                ITEM_1_QUANTIDADE_EM_ESTOQUE_PRODUTO);
+        Item item1 = new Item(produto1,ITEM_1_QUANTIDADE);
+        item1.defineValorTotal();
+
+        Produto produto2 = new Produto(ITEM_1_ID_PRODUTO,
+                ITEM_1_NOME_PRODUTO,
+                ITEM_1_PRECO_PRODUTO,
+                ITEM_1_QUANTIDADE_EM_ESTOQUE_PRODUTO);
+        Item item2 = new Item(produto2,ITEM_1_QUANTIDADE);
+        item2.defineValorTotal();
+
+        pedido.adicionaItem(item1);
+        pedido.adicionaItem(item2);
+        pedido.setListaDeItens(pedido.getListaDeItens());
+        pedido.setValorTotalDoPedido(VALOR_TOTAL_DO_PEDIDO_MENOR_QUE_RECEBIDO);
+    }
+
 }
