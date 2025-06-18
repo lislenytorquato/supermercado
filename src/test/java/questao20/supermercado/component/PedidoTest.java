@@ -104,6 +104,7 @@ public class PedidoTest {
     @Test
     @DisplayName("5- deve imprimir pedido")
     void deveImprimirPedido(){
+        pedido.imprimePedido();
 
         Mockito.verify(saidaImplement,Mockito.atMost(1)).imprimir(pedido.getListaDeItens().stream().toString());
         Mockito.verify(saidaImplement,Mockito.atMost(1)).imprimir(pedido.getValorTotalDoPedido());
