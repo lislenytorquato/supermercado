@@ -93,14 +93,14 @@ public class PedidoServiceTest {
     }
 
     @Test
-    @DisplayName("7- deve calcular notas quando troco eh maior que 10 e menor que 20")
+    @DisplayName("9- deve calcular notas quando troco eh maior que 10 e menor que 20")
     void deveCalcularNotasQuandoTrocoEhMaiorQue10EMenorQue20(){
         Integer notasDoTroco = pedidoService.calculaNotasDoTroco(16.75);
         Assertions.assertEquals(2, notasDoTroco);
     }
 
     @Test
-    @DisplayName("8- deve calcular notas quando troco eh menor que 10 ou maior que 20")
+    @DisplayName("10- deve calcular notas quando troco eh menor que 10 ou maior que 20")
     void deveCalcularNotasDoTrocoEhMenorQue10OuMaiorQue20(){
         Integer notasDoTroco1 = pedidoService.calculaNotasDoTroco(6.0);
         Integer notasDoTroco2 = pedidoService.calculaNotasDoTroco(23.0);
@@ -109,14 +109,14 @@ public class PedidoServiceTest {
     }
 
     @Test
-    @DisplayName("9- deve calcular notas quando troco eh maior que 5 e menor que 10")
+    @DisplayName("11- deve calcular notas quando troco eh maior que 5 e menor que 10")
     void deveCalcularNotasQuandoTrocoEhMaiorQue5EMenorQue10(){
         Integer notasDoTroco = pedidoService.calculaNotasDoTroco(8.75);
         Assertions.assertEquals(2, notasDoTroco);
     }
 
     @Test
-    @DisplayName("10- deve calcular notas quando troco eh menor que 5 ou maior que 10")
+    @DisplayName("12- deve calcular notas quando troco eh menor que 5 ou maior que 10")
     void deveCalcularNotasDoTrocoEhMenorQue5OuMaiorQue10(){
         Integer notasDoTroco1 = pedidoService.calculaNotasDoTroco(3.0);
         Integer notasDoTroco2 = pedidoService.calculaNotasDoTroco(15.0);
@@ -125,26 +125,20 @@ public class PedidoServiceTest {
     }
 
     @Test
-    @DisplayName("11- deve criar pedido")
+    @DisplayName("13- deve criar pedido")
     void deveCriarPedido(){
-        Produto produto1 = new Produto(ITEM_1_ID_PRODUTO,
-                ITEM_1_NOME_PRODUTO,
-                ITEM_1_PRECO_PRODUTO,
-                ITEM_1_QUANTIDADE_EM_ESTOQUE_PRODUTO);
-        Item item1 = new Item(produto1,ITEM_1_QUANTIDADE);
-        item1.defineValorTotal();
-
-        Produto produto2 = new Produto(ITEM_1_ID_PRODUTO,
-                ITEM_1_NOME_PRODUTO,
-                ITEM_1_PRECO_PRODUTO,
-                ITEM_1_QUANTIDADE_EM_ESTOQUE_PRODUTO);
-        Item item2 = new Item(produto2,ITEM_1_QUANTIDADE);
-        item2.defineValorTotal();
-
-        pedido.adicionaItem(item1);
-        pedido.adicionaItem(item2);
+     
         pedido.setListaDeItens(pedido.getListaDeItens());
         pedido.setValorTotalDoPedido(VALOR_TOTAL_DO_PEDIDO_MENOR_QUE_RECEBIDO);
+    }
+
+    @Test
+    @DisplayName("14- deve calcular notas quando troco eh 3 ou menor que 2")
+    void deveCalcularNotasQuandoTrocoEhMaiorQue3OuMenorQue2(){
+        Integer notasDoTroco1 = pedidoService.calculaNotasDoTroco(3.75);
+        Integer notasDoTroco2 = pedidoService.calculaNotasDoTroco(1.15);
+        Assertions.assertEquals(1, notasDoTroco1);
+        Assertions.assertEquals(0, notasDoTroco2);
     }
 
 }
