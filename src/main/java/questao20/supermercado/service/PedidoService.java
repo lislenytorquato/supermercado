@@ -16,11 +16,6 @@ public class PedidoService {
         this.pedido = pedido;
     }
 
-    public void criarPedido(List<Item> listaDeItens, Double valorTotalDoPedido){
-        pedido.setListaDeItens(listaDeItens);
-        pedido.setValorTotalDoPedido(valorTotalDoPedido);
-    }
-
     public Double retornarTroco(Double valorRecebido){
         return pedido.retornarTroco(valorRecebido);
     }
@@ -30,24 +25,42 @@ public class PedidoService {
     public Boolean adicionaItemNaLista(Produto produto, Integer quantidade){
         return pedido.adicionaItemNaLista(produto,quantidade);
     }
+    public void imprimePedido(){
+        pedido.imprimePedido();
+    }
+    public void imprimeValorTotal(){
+        pedido.imprimeValorTotal();
+    }
+    public void adicionaItem(Item item){
+        pedido.adicionaItem(item);
+    }
+    public String recebeNomeDoTeclado(){
+       return pedido.recebeNomeDoTeclado();
+    }
+    public Integer recebeQuantidadeDoTeclado(){
+        return pedido.recebeQuantidadeDoTeclado();
+    }
+    public void limparCarrinho(){
+        pedido.limparCarrinho();
+    }
     public Integer calculaNotasDoTroco(Double troco){
         Double[] valores={200.00,100.00,50.00,20.00,10.00,5.00,2.00};
-        Integer[] qtdNotas = new Integer[7];
-        Integer totalQtdNotas = 0;
+        Integer[] quantidadeDeNotas = new Integer[7];
+        Integer totalQuantidadeNotas = 0;
         for (int i = 0; i<7; i++){
 
             if (troco % valores[i] !=0.00){
-                qtdNotas[i] = (int) Math.floor(troco / valores[i]);
+                quantidadeDeNotas[i] = (int) Math.floor(troco / valores[i]);
                 troco = troco % valores[i];
-                totalQtdNotas += qtdNotas[i];
+                totalQuantidadeNotas += quantidadeDeNotas[i];
             } else if (troco % valores[i] == 0.00){
-                 qtdNotas[i] = (int) (troco / valores[i]);
-                troco -= (valores[i]*qtdNotas[i]);
-                totalQtdNotas += qtdNotas[i];
+                 quantidadeDeNotas[i] = (int) (troco / valores[i]);
+                troco -= (valores[i]*quantidadeDeNotas[i]);
+                totalQuantidadeNotas += quantidadeDeNotas[i];
             }
 
         }
-        return totalQtdNotas;
+        return totalQuantidadeNotas;
     }
 
 

@@ -12,7 +12,8 @@ import questao20.supermercado.implement.SaidaImplement;
 import questao20.supermercado.model.Estoque;
 import questao20.supermercado.model.Produto;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.atMost;
+import static org.mockito.Mockito.verify;
 import static questao20.supermercado.helper.EstoqueTestHelper.*;
 
 @ExtendWith(MockitoExtension.class)
