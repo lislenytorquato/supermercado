@@ -1,8 +1,5 @@
 package questao20.supermercado.model;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Produto {
    private Integer id;
    private String nome;
