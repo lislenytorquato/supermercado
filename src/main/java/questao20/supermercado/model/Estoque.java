@@ -18,67 +18,64 @@ public class Estoque {
         this.saidaImplement = saidaImplement;
     }
 
-    public void inicializaEstoque(){
-        this.imPrimeCatalogoDeEstoque();
+    public void inicializarEstoque(){
+        this.imPrimirCatalogoDeEstoque();
     }
-    public Produto encontraProduto(String nome) throws ProdutoException {
+    public Produto encontrarProdutoPorNome(String nome) throws ProdutoException {
         return listaDeProdutos.stream()
                 .filter(produto -> produto.getNome().equals(nome))
                 .findFirst().orElseThrow(() -> new ProdutoException("Produto nao encontrado"));
 
     }
-    public Produto encontraProduto(Integer id) throws ProdutoException {
+    public Produto encontrarProdutoPorId(Integer id) throws ProdutoException {
         return listaDeProdutos.stream()
                 .filter(produto -> produto.getId().equals(id))
                 .findFirst().orElseThrow(() -> new ProdutoException("Produto nao encontrado"));
     }
-    public Boolean cadastraProduto(Produto produto){
-         listaDeProdutos.add(produto);
-         return Boolean.TRUE;
+    public boolean cadastrarProduto(Produto produto){
+         return listaDeProdutos.add(produto);
     }
-    public void imPrimeCatalogoDeEstoque(){
-        saidaImplement.imprimir(listaDeProdutos.stream().toString());
+    public void imPrimirCatalogoDeEstoque(){
+        saidaImplement.imprimir(listaDeProdutos.toString());
 
     }
-    public Boolean darBaixaEmEstoque(String nome, Integer quantidadePraDarBaixa) throws ProdutoException {
-        Boolean darBaixaEmEstoque = Boolean.FALSE;
-        Produto produtoParaDarBaixa = encontraProduto(nome);
-        if (temEstoqueOuNao(produtoParaDarBaixa,quantidadePraDarBaixa)){
-            darBaixaEmEstoque=Boolean.TRUE;
+    public boolean darBaixaEmEstoquePorNome(String nome, Integer quantidadePraDarBaixa) throws ProdutoException {
+        boolean darBaixaEmEstoque = false;
+        Produto produtoParaDarBaixa = encontrarProdutoPorNome(nome);
+        int quantidadeDeProdutos = produtoParaDarBaixa.getQuantidadeEmEstoque();
+
+        if (temEstoque(produtoParaDarBaixa,quantidadePraDarBaixa)){
+             quantidadeDeProdutos -= quantidadePraDarBaixa;
+            darBaixaEmEstoque = true;
         }
+
         return darBaixaEmEstoque;
     }
-    public Boolean darBaixaEmEstoque(Integer id, Integer quantidadePraDarBaixa) throws ProdutoException {
+    public Boolean darBaixaEmEstoquePorId(Integer id, Integer quantidadePraDarBaixa) throws ProdutoException {
         Boolean darBaixaEmEstoque = Boolean.FALSE;
-        Produto produtoParaDarBaixa = encontraProduto(id);
+        Produto produtoParaDarBaixa = encontrarProdutoPorId(id);
+        int quantidadeDeProdutos = produtoParaDarBaixa.getQuantidadeEmEstoque();
 
-        if (temEstoqueOuNao(produtoParaDarBaixa,quantidadePraDarBaixa)){
+        if (temEstoque(produtoParaDarBaixa,quantidadePraDarBaixa)){
+            quantidadeDeProdutos -= quantidadePraDarBaixa;
             darBaixaEmEstoque=Boolean.TRUE;
         }
+
         return darBaixaEmEstoque;
     }
     public Integer getQuantidadeAtualEmEstoque(Produto produto){
         return produto.getQuantidadeEmEstoque();
     }
-    public Integer getPosicaoDoProdutoNaLista(Produto produto) throws ProdutoException {
-
-        Integer posicao = null;
+    public int getPosicaoDoProdutoNaLista(Produto produto) throws ProdutoException {
 
         for (int i=0;i<listaDeProdutos.size();i++){
             if (listaDeProdutos.get(i).getId().equals(produto.getId())){
-                 posicao=i;
+                 return i;
             }
         }
-        if (posicao==null){
             throw new ProdutoException("Produto nao encontrado");
-        }
-        return posicao;
     }
-    public Boolean temEstoqueOuNao(Produto produto, Integer quantidadeParaDarBaixa){
-        Boolean temEstoque = Boolean.TRUE;
-        if (produto.getQuantidadeEmEstoque().equals(quantidadeParaDarBaixa)){
-            temEstoque = Boolean.FALSE;
-        }
-        return temEstoque;
+    public Boolean temEstoque(Produto produto, int quantidadeParaDarBaixa){
+        return produto.getQuantidadeEmEstoque() >= quantidadeParaDarBaixa;
     }
 }

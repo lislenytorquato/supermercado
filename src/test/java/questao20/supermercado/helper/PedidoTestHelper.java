@@ -16,6 +16,7 @@ public class PedidoTestHelper {
     public static final Double TROCO_DEZ = 10.00;
     public static final Double TROCO_NOVE = 9.42;
     public static final String SEM_TROCO = "Sem troco";
+    public static final String SALDO_INSUFICIENTE = "Saldo insuficiente";
     public static final String ITEM_1_NOME_PRODUTO = "MACARRÃO";
     public static final Double ITEM_1_PRECO_PRODUTO = 10.98;
     public static final Integer ITEM_1_QUANTIDADE_EM_ESTOQUE_PRODUTO = 10;
