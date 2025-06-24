@@ -56,8 +56,8 @@ public class PedidoTest {
         Item item2 = new Item(produto2,ITEM_1_QUANTIDADE);
         item2.defineValorTotal();
 
-        pedido.adicionaItem(item1);
-        pedido.adicionaItem(item2);
+        pedido.adicionarItem(item1);
+        pedido.adicionarItem(item2);
     }
 
 
@@ -76,10 +76,12 @@ public class PedidoTest {
     @DisplayName("2- deve retornar troco se valor recebido for menor que valor total do pedido")
     void deveRetornarTrocoSeValorRecebidoForMenorQueValorTotalDoPedido(){
         pedido.setValorTotalDoPedido(VALOR_TOTAL_DO_PEDIDO_MAIOR_QUE_RECEBIDO);
+        Mockito.doNothing().when(saidaImplement).imprimir(SALDO_INSUFICIENTE);
         Mockito.doNothing().when(saidaImplement).imprimir(SEM_TROCO);
         Double troco = pedido.retornarTroco(VALOR_RECEBIDO_MENOR_QUE_TOTAL);
 
         Assertions.assertEquals(TROCO_ZERO, troco);
+        Mockito.verify(saidaImplement,Mockito.times(1)).imprimir(SALDO_INSUFICIENTE);
         Mockito.verify(saidaImplement,Mockito.times(1)).imprimir(SEM_TROCO);
     }
 
@@ -87,7 +89,7 @@ public class PedidoTest {
     @DisplayName("3- deve calcular valor total do pedido")
     void deveCalcularValorTotalDoPedido(){
 
-        pedido.calculaValorTotal();
+        pedido.calcularValorTotal();
 
         Mockito.verify(item,Mockito.atMost(1)).defineValorTotal();
     }
@@ -96,7 +98,7 @@ public class PedidoTest {
     @DisplayName("4- deve adicionar item na lista")
     void deveAdicionarItemNaLista(){
 
-        Boolean pedidoAdicionado = pedido.adicionaItemNaLista(produto, item.getQuantidade());
+        Boolean pedidoAdicionado = pedido.adicionarItemNaLista(produto, item.getQuantidade());
 
         Assertions.assertEquals(Boolean.TRUE,pedidoAdicionado);
     }
@@ -104,7 +106,7 @@ public class PedidoTest {
     @Test
     @DisplayName("5- deve imprimir pedido")
     void deveImprimirPedido(){
-        pedido.imprimePedido();
+        pedido.imprimirPedido();
 
         Mockito.verify(saidaImplement,Mockito.atMost(1)).imprimir(pedido.getListaDeItens().stream().toString());
         Mockito.verify(saidaImplement,Mockito.atMost(1)).imprimir(pedido.getValorTotalDoPedido());
@@ -114,7 +116,7 @@ public class PedidoTest {
     @DisplayName("6- deve imprimir valor do pedido")
     void deveImprimirValorDoPedido(){
 
-        pedido.imprimeValorTotal();
+        pedido.imprimirValorTotal();
 
         Mockito.verify(saidaImplement,Mockito.atMost(1)).imprimir(pedido.getValorTotalDoPedido());
     }
@@ -128,21 +130,21 @@ public class PedidoTest {
                 ITEM_1_QUANTIDADE_EM_ESTOQUE_PRODUTO);
         Item item = new Item(produto,ITEM_1_QUANTIDADE);
         item.defineValorTotal();
-        pedido.adicionaItem(item);
+        pedido.adicionarItem(item);
 
         Assertions.assertEquals(ITEM_1_NOME_PRODUTO, item.getProduto().getNome());
     }
     @Test
     @DisplayName("8- deve receber nome do teclado")
     void deveReceberNomeDoTeclado(){
-        pedido.recebeNomeDoTeclado();
+        pedido.receberNomeDoTeclado();
         Mockito.verify(entradaImplement,Mockito.atMost(1)).lerString();
     }
 
     @Test
     @DisplayName("9- deve receber nome do teclado")
     void deveReceberQuantidadeDoTeclado(){
-        pedido.recebeQuantidadeDoTeclado();
+        pedido.receberQuantidadeDoTeclado();
         Mockito.verify(entradaImplement,Mockito.atMost(1)).lerString();
     }
 

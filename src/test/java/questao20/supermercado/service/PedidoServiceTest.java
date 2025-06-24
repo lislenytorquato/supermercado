@@ -9,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import questao20.supermercado.helper.PedidoTestHelper;
 import questao20.supermercado.model.Item;
 import questao20.supermercado.model.Pedido;
 import questao20.supermercado.model.Produto;
@@ -17,11 +16,7 @@ import questao20.supermercado.model.Produto;
 import java.util.List;
 
 import static questao20.supermercado.helper.PedidoTestHelper.*;
-import static questao20.supermercado.helper.PedidoTestHelper.ITEM_1_ID_PRODUTO;
-import static questao20.supermercado.helper.PedidoTestHelper.ITEM_1_NOME_PRODUTO;
-import static questao20.supermercado.helper.PedidoTestHelper.ITEM_1_PRECO_PRODUTO;
 import static questao20.supermercado.helper.PedidoTestHelper.ITEM_1_QUANTIDADE;
-import static questao20.supermercado.helper.PedidoTestHelper.ITEM_1_QUANTIDADE_EM_ESTOQUE_PRODUTO;
 
 @ExtendWith(MockitoExtension.class)
 public class PedidoServiceTest {
@@ -154,16 +149,16 @@ public class PedidoServiceTest {
     @DisplayName("16- deve calcular valor total do pedido")
     void deveCalcularValorTotalDoPedido() {
         criarListaDeitens();
-        Mockito.doNothing().when(pedido).calculaValorTotal();
+        Mockito.doNothing().when(pedido).calcularValorTotal();
         pedidoService.calculaValorTotal();
-        Mockito.verify(pedido, Mockito.atMost(1)).calculaValorTotal();
+        Mockito.verify(pedido, Mockito.atMost(1)).calcularValorTotal();
     }
 
     @Test
     @DisplayName("17- deve adicionar item no pedido")
     void deveAdicionarItemNoPedido() {
         Produto produto1 = criarProduto1();
-        Mockito.when(pedido.adicionaItemNaLista(produto1, ITEM_1_QUANTIDADE)).thenReturn(Boolean.TRUE);
+        Mockito.when(pedido.adicionarItemNaLista(produto1, ITEM_1_QUANTIDADE)).thenReturn(Boolean.TRUE);
         Boolean estaAdicionadoALista = pedidoService.adicionaItemNaLista(produto1, ITEM_1_QUANTIDADE);
         Assertions.assertEquals(Boolean.TRUE, estaAdicionadoALista);
     }
@@ -172,40 +167,40 @@ public class PedidoServiceTest {
     @DisplayName("18- deve imprimir pedido")
     void deveImprimirPedido() {
         criarListaDeitens();
-        Mockito.doNothing().when(pedido).imprimePedido();
+        Mockito.doNothing().when(pedido).imprimirPedido();
         pedidoService.imprimePedido();
-        Mockito.verify(pedido, Mockito.atMost(1)).imprimePedido();
+        Mockito.verify(pedido, Mockito.atMost(1)).imprimirPedido();
     }
 
     @Test
     @DisplayName("19- deve imprimir valor total")
     void deveImprimirValorTotal() {
         criarListaDeitens();
-        Mockito.doNothing().when(pedido).imprimeValorTotal();
+        Mockito.doNothing().when(pedido).imprimirValorTotal();
         pedidoService.imprimeValorTotal();
-        Mockito.verify(pedido, Mockito.atMost(1)).imprimeValorTotal();
+        Mockito.verify(pedido, Mockito.atMost(1)).imprimirValorTotal();
     }
 
     @Test
     @DisplayName("19- deve adicionar item")
     void deveAdicionarItem() {
         List<Item> items = criarListaDeitens();
-        Mockito.doNothing().when(pedido).adicionaItem(items.getFirst());
+        Mockito.doNothing().when(pedido).adicionarItem(items.getFirst());
         pedidoService.adicionaItem(items.getFirst());
-        Mockito.verify(pedido, Mockito.atMost(1)).adicionaItem(items.getFirst());
+        Mockito.verify(pedido, Mockito.atMost(1)).adicionarItem(items.getFirst());
     }
 
     @Test
     @DisplayName("20- deve receber nome no teclado")
     void deveReceberNomeNoTeclado() {
-        Mockito.when(pedido.recebeNomeDoTeclado()).thenReturn("MACARRÃO");
+        Mockito.when(pedido.receberNomeDoTeclado()).thenReturn("MACARRÃO");
         String recebeNomeDoTeclado = pedidoService.recebeNomeDoTeclado();
         Assertions.assertEquals("MACARRÃO",recebeNomeDoTeclado );
     }
     @Test
     @DisplayName("21- deve receber nome no teclado")
     void deveReceberQuantidadeNoTeclado() {
-        Mockito.when(pedido.recebeQuantidadeDoTeclado()).thenReturn(10);
+        Mockito.when(pedido.receberQuantidadeDoTeclado()).thenReturn(10);
         Integer recebeQuantidadeDoTeclado = pedidoService.recebeQuantidadeDoTeclado();
         Assertions.assertEquals(10,recebeQuantidadeDoTeclado);
     }

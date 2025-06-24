@@ -22,7 +22,7 @@ public class EstoqueTestHelper {
     public static final String NOME_PRODUTO_INEXISTENTE = "CAFÉ";
     public static final Integer ID_PRODUTO_INEXISTENTE = 4;
     public static final Integer QTD_PARA_DAR_BAIXA_IGUAL_A_QTD_ESTOQUE_PRODUTO_1 = 10;
-    public static final Integer QTD_PARA_DAR_BAIXA_DIFERENTE_A_QTD_ESTOQUE_PRODUTO_1 = 7;
+    public static final Integer QTD_PARA_DAR_BAIXA_MENOR_A_QTD_ESTOQUE_PRODUTO_1 = 7;
 
     public static List<Produto> criarListaDeProdutos(){
         Produto produto1 =  new Produto(ID_PRODUTO_1,NOME_PRODUTO_1,PRECO_PRODUTO_1,QTD_ESTOQUE_PRODUTO_1);

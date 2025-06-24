@@ -4,12 +4,12 @@ import org.springframework.stereotype.Component;
 import questao20.supermercado.implement.EntradaImplement;
 import questao20.supermercado.implement.SaidaImplement;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 @Component
 public class Pedido {
-    private List<Item> listaDeItens;
+    private List<Item> listaDeItens = new ArrayList<>();
     private Double valorTotalDoPedido = 0.0;
     private SaidaImplement saidaImplement;
     private EntradaImplement entradaImplement;
@@ -30,36 +30,39 @@ public class Pedido {
         if (valorRecebido>this.getValorTotalDoPedido()){
             troco = valorRecebido - this.getValorTotalDoPedido();
         }
+        if (valorRecebido<this.getValorTotalDoPedido()){
+            saidaImplement.imprimir("Saldo insuficiente");
+        }
         if (troco.equals(0.0)){
            saidaImplement.imprimir("Sem troco");
         }
         return troco;
     }
-    public void calculaValorTotal(){
+    public void calcularValorTotal(){
+        this.valorTotalDoPedido = 0.0;
         listaDeItens.forEach(item -> {
             item.defineValorTotal();
             this.valorTotalDoPedido += item.getValorDoItem();
         });
 
     }
-    public Boolean adicionaItemNaLista(Produto produto, Integer quantidade){
-        listaDeItens.add(new Item(produto,quantidade));
-        return Boolean.TRUE;
+    public boolean adicionarItemNaLista(Produto produto, Integer quantidade){
+        return listaDeItens.add(new Item(produto,quantidade));
     }
-    public void imprimePedido(){
+    public void imprimirPedido(){
     saidaImplement.imprimir(this.listaDeItens.stream().toString());
     saidaImplement.imprimir(this.getValorTotalDoPedido());
     }
-    public void imprimeValorTotal(){
+    public void imprimirValorTotal(){
         saidaImplement.imprimir(this.getValorTotalDoPedido());
     }
-    public void adicionaItem(Item item){
+    public void adicionarItem(Item item){
         listaDeItens.add(item);
     }
-    public String recebeNomeDoTeclado(){
+    public String receberNomeDoTeclado(){
         return entradaImplement.lerString();
     }
-    public Integer recebeQuantidadeDoTeclado(){
+    public Integer receberQuantidadeDoTeclado(){
         return entradaImplement.lerInt();
     }
     public void limparCarrinho(){

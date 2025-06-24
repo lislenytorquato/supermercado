@@ -1,6 +1,7 @@
 package questao20.supermercado.component;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,8 @@ import questao20.supermercado.exception.ProdutoException;
 import questao20.supermercado.implement.SaidaImplement;
 import questao20.supermercado.model.Estoque;
 import questao20.supermercado.model.Produto;
+
+import java.util.List;
 
 import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.verify;
@@ -25,14 +28,25 @@ public class EstoqueTest {
     @Mock
     SaidaImplement saidaImplement;
 
+    List<Produto> produtos = criarListaDeProdutos();
+
+    @BeforeEach
+        void setUp(){
+
+            produtos.forEach(produto -> {
+                estoque.cadastrarProduto(produto);
+            });
+        }
+
+
 
     @Test
     @DisplayName("1-deve incializar estoque imprimindo catalogo")
     void deveInicializarEstoqueImprimindoOCatalogo() {
-        Boolean cadastraProduto1 = estoque.cadastraProduto(criarListaDeProdutos().getFirst());
-        Boolean cadastraProduto2 = estoque.cadastraProduto(criarListaDeProdutos().get(1));
-        Boolean cadastraProduto3 = estoque.cadastraProduto(criarListaDeProdutos().getLast());
-        String imprimirListaDeProdutos = criarListaDeProdutos().stream().toString();
+
+        String imprimirListaDeProdutos = produtos.toString();
+
+        estoque.inicializarEstoque();
 
         verify(saidaImplement, atMost(1)).imprimir(imprimirListaDeProdutos);
 
@@ -41,126 +55,99 @@ public class EstoqueTest {
     @Test
     @DisplayName("2- deve encontrar produto por nome")
     void deveEncontrarProdutoPorNome() throws ProdutoException {
-        Boolean cadastraProduto1 = estoque.cadastraProduto(criarListaDeProdutos().getFirst());
-        Boolean cadastraProduto2 = estoque.cadastraProduto(criarListaDeProdutos().get(1));
-        Boolean cadastraProduto3 = estoque.cadastraProduto(criarListaDeProdutos().getLast());
 
-        Produto produto1Encontrado = estoque.encontraProduto(NOME_PRODUTO_1);
 
-        Assertions.assertEquals(criarListaDeProdutos().getFirst().getNome(), produto1Encontrado.getNome());
-        Assertions.assertEquals(criarListaDeProdutos().getFirst().getPreco(), produto1Encontrado.getPreco());
-        Assertions.assertEquals(criarListaDeProdutos().getFirst().getQuantidadeEmEstoque(), produto1Encontrado.getQuantidadeEmEstoque());
+        Produto produto1Encontrado = estoque.encontrarProdutoPorNome(NOME_PRODUTO_1);
+
+        Assertions.assertEquals(produtos.get(0).getNome(), produto1Encontrado.getNome());
+        Assertions.assertEquals(produtos.get(0).getPreco(), produto1Encontrado.getPreco());
+        Assertions.assertEquals(produtos.get(0).getQuantidadeEmEstoque(), produto1Encontrado.getQuantidadeEmEstoque());
 
     }
 
     @Test
     @DisplayName("3- deve lancar excecao quando nao encontrar produto por nome")
     void deveLancarExcecaoQuandoNaoEncontrarProdutoPorNome() throws ProdutoException {
-        Boolean cadastraProduto1 = estoque.cadastraProduto(criarListaDeProdutos().getFirst());
-        Boolean cadastraProduto2 = estoque.cadastraProduto(criarListaDeProdutos().get(1));
-        Boolean cadastraProduto3 = estoque.cadastraProduto(criarListaDeProdutos().getLast());
-        Assertions.assertThrows(ProdutoException.class, () -> estoque.encontraProduto(NOME_PRODUTO_INEXISTENTE));
+
+        Assertions.assertThrows(ProdutoException.class, () -> estoque.encontrarProdutoPorNome(NOME_PRODUTO_INEXISTENTE));
     }
 
     @Test
     @DisplayName("4- deve encontrar produto por id")
     void deveEncontrarProdutoPorId() throws ProdutoException {
-        Boolean cadastraProduto1 = estoque.cadastraProduto(criarListaDeProdutos().getFirst());
-        Boolean cadastraProduto2 = estoque.cadastraProduto(criarListaDeProdutos().get(1));
-        Boolean cadastraProduto3 = estoque.cadastraProduto(criarListaDeProdutos().getLast());
 
-        Produto produto1Encontrado = estoque.encontraProduto(ID_PRODUTO_3);
+        Produto produto1Encontrado = estoque.encontrarProdutoPorId(ID_PRODUTO_3);
 
-        Assertions.assertEquals(criarListaDeProdutos().getLast().getNome(), produto1Encontrado.getNome());
-        Assertions.assertEquals(criarListaDeProdutos().getLast().getPreco(), produto1Encontrado.getPreco());
-        Assertions.assertEquals(criarListaDeProdutos().getLast().getQuantidadeEmEstoque(), produto1Encontrado.getQuantidadeEmEstoque());
+        Assertions.assertEquals(produtos.get(2).getNome(), produto1Encontrado.getNome());
+        Assertions.assertEquals(produtos.get(2).getPreco(), produto1Encontrado.getPreco());
+        Assertions.assertEquals(produtos.get(2).getQuantidadeEmEstoque(), produto1Encontrado.getQuantidadeEmEstoque());
 
     }
 
     @Test
     @DisplayName("5- deve lancar excecao quando nao encontrar produto por id")
     void deveLancarExcecaoQuandoNaoEncontrarProdutoPorId() throws ProdutoException {
-        Boolean cadastraProduto1 = estoque.cadastraProduto(criarListaDeProdutos().getFirst());
-        Boolean cadastraProduto2 = estoque.cadastraProduto(criarListaDeProdutos().get(1));
-        Boolean cadastraProduto3 = estoque.cadastraProduto(criarListaDeProdutos().getLast());
-        Assertions.assertThrows(ProdutoException.class, () -> estoque.encontraProduto(ID_PRODUTO_INEXISTENTE));
+
+        Assertions.assertThrows(ProdutoException.class, () -> estoque.encontrarProdutoPorId(ID_PRODUTO_INEXISTENTE));
     }
 
     @Test
     @DisplayName("6-deve retornar true ao cadastrar produtos")
     void deveRetornarTrueAoCadastrarProdutos() {
-        Boolean cadastraProduto1 = estoque.cadastraProduto(criarListaDeProdutos().getFirst());
-        Boolean cadastraProduto2 = estoque.cadastraProduto(criarListaDeProdutos().get(1));
-        Boolean cadastraProduto3 = estoque.cadastraProduto(criarListaDeProdutos().getLast());
-
-        Assertions.assertEquals(Boolean.TRUE, cadastraProduto1);
-        Assertions.assertEquals(Boolean.TRUE, cadastraProduto2);
-        Assertions.assertEquals(Boolean.TRUE, cadastraProduto3);
+        produtos.forEach(produto -> {
+            boolean produtoCadastrado = estoque.cadastrarProduto(produto);
+            Assertions.assertEquals(Boolean.TRUE, produtoCadastrado);
+        });
     }
 
     @Test
     @DisplayName("7- deve retornar false ao dar baixa em estoque por nome")
     void deveRetornarFalseAoDarBaixaEmEstoquePorNome() throws ProdutoException {
-        Boolean cadastraProduto1 = estoque.cadastraProduto(criarListaDeProdutos().getFirst());
-        Boolean cadastraProduto2 = estoque.cadastraProduto(criarListaDeProdutos().get(1));
-        Boolean cadastraProduto3 = estoque.cadastraProduto(criarListaDeProdutos().getLast());
 
-        estoque.encontraProduto(NOME_PRODUTO_1);
+        estoque.encontrarProdutoPorNome(NOME_PRODUTO_1);
 
-        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoque(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_IGUAL_A_QTD_ESTOQUE_PRODUTO_1);
+        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorNome(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_MENOR_A_QTD_ESTOQUE_PRODUTO_1);
 
         Assertions.assertEquals(Boolean.FALSE,darBaixaEmEstoque);
 
     }
     @Test
     @DisplayName("8- deve retornar true ao dar baixa em estoque por nome")
-    void deveRetornarTrueAoDarBaixaEmEstoquePorNome() throws ProdutoException {
-        Boolean cadastraProduto1 = estoque.cadastraProduto(criarListaDeProdutos().getFirst());
-        Boolean cadastraProduto2 = estoque.cadastraProduto(criarListaDeProdutos().get(1));
-        Boolean cadastraProduto3 = estoque.cadastraProduto(criarListaDeProdutos().getLast());
+    void deveRetornarTrueAoDarBaixaEmEstoquePorIdPorNome() throws ProdutoException {
 
-        estoque.encontraProduto(NOME_PRODUTO_1);
+        estoque.encontrarProdutoPorNome(NOME_PRODUTO_1);
 
-        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoque(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_DIFERENTE_A_QTD_ESTOQUE_PRODUTO_1);
+        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorNome(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_IGUAL_A_QTD_ESTOQUE_PRODUTO_1);
 
         Assertions.assertEquals(Boolean.TRUE,darBaixaEmEstoque);
 
     }
     @Test
-    @DisplayName("7- deve retornar false ao dar baixa em estoque por id")
+    @DisplayName("9- deve retornar false ao dar baixa em estoque por id")
     void deveRetornarFalseAoDarBaixaEmEstoquePorId() throws ProdutoException {
-        Boolean cadastraProduto1 = estoque.cadastraProduto(criarListaDeProdutos().getFirst());
-        Boolean cadastraProduto2 = estoque.cadastraProduto(criarListaDeProdutos().get(1));
-        Boolean cadastraProduto3 = estoque.cadastraProduto(criarListaDeProdutos().getLast());
 
-        estoque.encontraProduto(NOME_PRODUTO_1);
+        estoque.encontrarProdutoPorId(ID_PRODUTO_1);
 
-        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoque(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_IGUAL_A_QTD_ESTOQUE_PRODUTO_1);
+        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorId(ID_PRODUTO_1,QTD_PARA_DAR_BAIXA_MENOR_A_QTD_ESTOQUE_PRODUTO_1);
 
         Assertions.assertEquals(Boolean.FALSE,darBaixaEmEstoque);
 
     }
     @Test
-    @DisplayName("8- deve retornar true ao dar baixa em estoque por id")
+    @DisplayName("10- deve retornar true ao dar baixa em estoque por id")
     void deveRetornarTrueAoDarBaixaEmEstoquePorId() throws ProdutoException {
-        Boolean cadastraProduto1 = estoque.cadastraProduto(criarListaDeProdutos().getFirst());
-        Boolean cadastraProduto2 = estoque.cadastraProduto(criarListaDeProdutos().get(1));
-        Boolean cadastraProduto3 = estoque.cadastraProduto(criarListaDeProdutos().getLast());
 
-        estoque.encontraProduto(NOME_PRODUTO_1);
+        estoque.encontrarProdutoPorId(ID_PRODUTO_1);
 
-        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoque(ID_PRODUTO_1,QTD_PARA_DAR_BAIXA_DIFERENTE_A_QTD_ESTOQUE_PRODUTO_1);
+        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorId(ID_PRODUTO_1,QTD_PARA_DAR_BAIXA_MENOR_A_QTD_ESTOQUE_PRODUTO_1);
 
         Assertions.assertEquals(Boolean.TRUE,darBaixaEmEstoque);
 
     }
 
     @Test
-    @DisplayName("9- deve retornar posicao do produto")
+    @DisplayName("11- deve retornar posicao do produto")
     void deveRetornarPosicaoDoProduto() throws ProdutoException {
-        Boolean cadastraProduto1 = estoque.cadastraProduto(criarListaDeProdutos().getFirst());
-        Boolean cadastraProduto2 = estoque.cadastraProduto(criarListaDeProdutos().get(1));
-        Boolean cadastraProduto3 = estoque.cadastraProduto(criarListaDeProdutos().getLast());
 
         Integer posicaoDoProdutoNaLista = estoque.getPosicaoDoProdutoNaLista(criarListaDeProdutos().getLast());
 
