@@ -56,12 +56,12 @@ public class MenuTest {
 
         menuDoNothingWhen(saidaImplement);
         when(entradaImplement.lerInt()).thenReturn(2);
-      doNothing().when(estoque).inicializaEstoque();
+      doNothing().when(estoque).inicializarEstoque();
         menu.controlaMenu();
 
       verificarMenu(saidaImplement,entradaImplement);
        verify(entradaImplement,times(1)).lerInt();
-        verify(estoque,times(1)).inicializaEstoque();
+        verify(estoque,times(1)).inicializarEstoque();
     }
 
     @Test

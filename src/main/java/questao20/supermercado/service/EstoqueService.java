@@ -25,23 +25,23 @@ public class EstoqueService {
         menu.controlaMenu();
     }
     public void criarEstoque(Produto produtoNovo){
-        if (estoque.cadastraProduto(produtoNovo)){
-            estoque.inicializaEstoque();
+        if (estoque.cadastrarProduto(produtoNovo)){
+            estoque.inicializarEstoque();
         }
     }
     public Produto encontraProdutoPorNomeNoEstoque(String nome) throws ProdutoException {
-        return estoque.encontraProduto(nome);
+        return estoque.encontrarProdutoPorNome(nome);
     }
     public Produto encontraProdutoPorIdNoEstoque(Integer id) throws ProdutoException {
-        return estoque.encontraProduto(id);
+        return estoque.encontrarProdutoPorId(id);
     }
     public void darBaixaEmEstoquePorNomeDoProduto(String nome, Integer quantidadePraDarBaixa) throws ProdutoException {
-        if (estoque.darBaixaEmEstoque(nome,quantidadePraDarBaixa)){
+        if (estoque.darBaixaEmEstoquePorNome(nome,quantidadePraDarBaixa)){
             saidaImplement.imprimir(nome+ "saiu do estoque...");
         }
     }
-    public void darBaixaEmEstoquePorIdDoProduto(String id, Integer quantidadePraDarBaixa) throws ProdutoException {
-        if (estoque.darBaixaEmEstoque(id,quantidadePraDarBaixa)){
+    public void darBaixaEmEstoquePorIdDoProduto(Integer id, Integer quantidadePraDarBaixa) throws ProdutoException {
+        if (estoque.darBaixaEmEstoquePorId(id,quantidadePraDarBaixa)){
             saidaImplement.imprimir(id+ "saiu do estoque...");
         }
     }
