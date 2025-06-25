@@ -26,7 +26,7 @@ public class Menu {
     }
 
     public void mostraEstoque(){
-        estoque.inicializaEstoque();
+        estoque.inicializarEstoque();
     }
     public void switchCase (){
         int opcao = entradaImplement.lerInt();

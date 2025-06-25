@@ -5,8 +5,6 @@ import questao20.supermercado.model.Item;
 import questao20.supermercado.model.Pedido;
 import questao20.supermercado.model.Produto;
 
-import java.util.List;
-
 @Service
 public class PedidoService {
 
@@ -20,25 +18,25 @@ public class PedidoService {
         return pedido.retornarTroco(valorRecebido);
     }
     public void calculaValorTotal(){
-        pedido.calculaValorTotal();
+        pedido.calcularValorTotal();
     }
     public Boolean adicionaItemNaLista(Produto produto, Integer quantidade){
-        return pedido.adicionaItemNaLista(produto,quantidade);
+        return pedido.adicionarItemNaLista(produto,quantidade);
     }
     public void imprimePedido(){
-        pedido.imprimePedido();
+        pedido.imprimirPedido();
     }
     public void imprimeValorTotal(){
-        pedido.imprimeValorTotal();
+        pedido.imprimirValorTotal();
     }
     public void adicionaItem(Item item){
-        pedido.adicionaItem(item);
+        pedido.adicionarItem(item);
     }
     public String recebeNomeDoTeclado(){
-       return pedido.recebeNomeDoTeclado();
+       return pedido.receberNomeDoTeclado();
     }
     public Integer recebeQuantidadeDoTeclado(){
-        return pedido.recebeQuantidadeDoTeclado();
+        return pedido.receberQuantidadeDoTeclado();
     }
     public void limparCarrinho(){
         pedido.limparCarrinho();
