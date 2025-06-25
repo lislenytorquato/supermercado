@@ -50,7 +50,7 @@ public class Pedido {
         return listaDeItens.add(new Item(produto,quantidade));
     }
     public void imprimirPedido(){
-    saidaImplement.imprimir(this.listaDeItens.stream().toString());
+    saidaImplement.imprimir(this.listaDeItens.toString());
     saidaImplement.imprimir(this.getValorTotalDoPedido());
     }
     public void imprimirValorTotal(){

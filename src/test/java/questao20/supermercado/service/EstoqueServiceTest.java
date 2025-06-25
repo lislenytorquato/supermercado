@@ -74,15 +74,15 @@ public class EstoqueServiceTest {
     @DisplayName("5- deve dar baixa em estoque por nome do produto ")
     void deveDarBaixarEstoquePorNomeDoProduto() throws ProdutoException {
         Produto produto = new Produto(ID_PRODUTO_1,NOME_PRODUTO_1,PRECO_PRODUTO_1,QTD_ESTOQUE_PRODUTO_1);
-        when(estoque.darBaixaEmEstoquePorNome(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_MENOR_A_QTD_ESTOQUE_PRODUTO_1)).thenReturn(Boolean.TRUE);
-        estoqueService.darBaixaEmEstoquePorNomeDoProduto(NOME_PRODUTO_1, QTD_PARA_DAR_BAIXA_MENOR_A_QTD_ESTOQUE_PRODUTO_1);
+        when(estoque.darBaixaEmEstoquePorNome(NOME_PRODUTO_1, QTD_PARA_DAR_BAIXA_MAIOR_QUE_A_QTD_ESTOQUE_PRODUTO_1)).thenReturn(Boolean.TRUE);
+        estoqueService.darBaixaEmEstoquePorNomeDoProduto(NOME_PRODUTO_1, QTD_PARA_DAR_BAIXA_MAIOR_QUE_A_QTD_ESTOQUE_PRODUTO_1);
 
-        verify(estoque,times(1)).darBaixaEmEstoquePorNome(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_MENOR_A_QTD_ESTOQUE_PRODUTO_1);
+        verify(estoque,times(1)).darBaixaEmEstoquePorNome(NOME_PRODUTO_1, QTD_PARA_DAR_BAIXA_MAIOR_QUE_A_QTD_ESTOQUE_PRODUTO_1);
 
     }
 
     @Test
-    @DisplayName("5- deve dar baixa em estoque por nome do produto ")
+    @DisplayName("5- deve dar baixa em estoque por id do produto ")
     void deveDarBaixarEstoquePorIdDoProduto() throws ProdutoException {
         Produto produto = new Produto(ID_PRODUTO_1,NOME_PRODUTO_1,PRECO_PRODUTO_1,QTD_ESTOQUE_PRODUTO_1);
         when(estoque.darBaixaEmEstoquePorId(ID_PRODUTO_1,QTD_PARA_DAR_BAIXA_IGUAL_A_QTD_ESTOQUE_PRODUTO_1)).thenReturn(Boolean.TRUE);

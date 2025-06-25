@@ -51,19 +51,19 @@ public class Estoque {
 
         return darBaixaEmEstoque;
     }
-    public Boolean darBaixaEmEstoquePorId(Integer id, Integer quantidadePraDarBaixa) throws ProdutoException {
-        Boolean darBaixaEmEstoque = Boolean.FALSE;
+    public boolean darBaixaEmEstoquePorId(Integer id, Integer quantidadePraDarBaixa) throws ProdutoException {
+        boolean darBaixaEmEstoque = false;
         Produto produtoParaDarBaixa = encontrarProdutoPorId(id);
         int quantidadeDeProdutos = produtoParaDarBaixa.getQuantidadeEmEstoque();
 
         if (temEstoque(produtoParaDarBaixa,quantidadePraDarBaixa)){
             quantidadeDeProdutos -= quantidadePraDarBaixa;
-            darBaixaEmEstoque=Boolean.TRUE;
+            darBaixaEmEstoque = true;
         }
 
         return darBaixaEmEstoque;
     }
-    public Integer getQuantidadeAtualEmEstoque(Produto produto){
+    public int getQuantidadeAtualEmEstoque(Produto produto){
         return produto.getQuantidadeEmEstoque();
     }
     public int getPosicaoDoProdutoNaLista(Produto produto) throws ProdutoException {
@@ -75,7 +75,7 @@ public class Estoque {
         }
             throw new ProdutoException("Produto nao encontrado");
     }
-    public Boolean temEstoque(Produto produto, int quantidadeParaDarBaixa){
+    public boolean temEstoque(Produto produto, int quantidadeParaDarBaixa){
         return produto.getQuantidadeEmEstoque() >= quantidadeParaDarBaixa;
     }
 }
