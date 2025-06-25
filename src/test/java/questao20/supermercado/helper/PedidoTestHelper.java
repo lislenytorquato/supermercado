@@ -7,6 +7,8 @@ import java.util.List;
 
 public class PedidoTestHelper {
     public static final Double TROCO_ZERO = 0.0;
+    public static final Double VALOR_TOTAL_DO_PEDIDO_IGUAL_AO_RECEBIDO = 100.0;
+    public static final Double VALOR_RECEBIDO_IGUAL_AO_TOTAL_DO_PEDIDO = 100.0;
     public static final Double VALOR_TOTAL_DO_PEDIDO_MAIOR_QUE_RECEBIDO = 100.0;
     public static final Double VALOR_RECEBIDO_MENOR_QUE_TOTAL = 70.0;
     public static final Double TROCO_TRINTA = 30.0;

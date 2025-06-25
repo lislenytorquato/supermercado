@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import questao20.supermercado.exception.ProdutoException;
 import questao20.supermercado.implement.SaidaImplement;
@@ -15,13 +17,13 @@ import questao20.supermercado.model.Produto;
 
 import java.util.List;
 
-import static org.mockito.Mockito.atMost;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static questao20.supermercado.helper.EstoqueTestHelper.*;
 
 @ExtendWith(MockitoExtension.class)
 public class EstoqueTest {
 
+    @Spy
     @InjectMocks
     Estoque estoque;
 
@@ -44,11 +46,16 @@ public class EstoqueTest {
     @DisplayName("1-deve incializar estoque imprimindo catalogo")
     void deveInicializarEstoqueImprimindoOCatalogo() {
 
-        String imprimirListaDeProdutos = produtos.toString();
+        String catalogo = produtos.toString();
+
+        Mockito.doNothing().when(saidaImplement).imprimir(catalogo);
 
         estoque.inicializarEstoque();
 
-        verify(saidaImplement, atMost(1)).imprimir(imprimirListaDeProdutos);
+
+        verify(estoque, atMost(1)).imPrimirCatalogoDeEstoque();
+        verify(saidaImplement,atMost(1)).imprimir(catalogo);
+
 
     }
 
@@ -101,55 +108,84 @@ public class EstoqueTest {
     }
 
     @Test
-    @DisplayName("7- deve retornar false ao dar baixa em estoque por nome")
-    void deveRetornarFalseAoDarBaixaEmEstoquePorNome() throws ProdutoException {
+    @DisplayName("7- deve retornar false ao dar baixa em estoque por nome quando a quantidade para dar baixa é maior que a quantidade em estoque")
+    void deveRetornarFalseAoDarBaixaEmEstoquePorNomeQuandoQuantidadeParaDarBaixaÉMaiorQueAQuantidadeEmEstoque() throws ProdutoException {
 
-        estoque.encontrarProdutoPorNome(NOME_PRODUTO_1);
+        Produto produto1 = estoque.encontrarProdutoPorNome(NOME_PRODUTO_1);
 
-        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorNome(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_MENOR_A_QTD_ESTOQUE_PRODUTO_1);
+        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorNome(NOME_PRODUTO_1, QTD_PARA_DAR_BAIXA_MAIOR_QUE_A_QTD_ESTOQUE_PRODUTO_1);
 
+        Mockito.verify(estoque,Mockito.atMost(1)).temEstoque(produto1,QTD_PARA_DAR_BAIXA_MAIOR_QUE_A_QTD_ESTOQUE_PRODUTO_1);
         Assertions.assertEquals(Boolean.FALSE,darBaixaEmEstoque);
 
     }
     @Test
-    @DisplayName("8- deve retornar true ao dar baixa em estoque por nome")
-    void deveRetornarTrueAoDarBaixaEmEstoquePorIdPorNome() throws ProdutoException {
+    @DisplayName("8- deve retornar true ao dar baixa em estoque por nome quando a quantidade para dar baixa é igual a quantidade em estoque")
+    void deveRetornarTrueAoDarBaixaEmEstoquePorNomeQuandoQuantidadeParaDarBaixaÉIgualQueAQuantidadeEmEstoque() throws ProdutoException {
 
-        estoque.encontrarProdutoPorNome(NOME_PRODUTO_1);
+        Produto produto1 = estoque.encontrarProdutoPorNome(NOME_PRODUTO_1);
 
         Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorNome(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_IGUAL_A_QTD_ESTOQUE_PRODUTO_1);
 
+        Mockito.verify(estoque,Mockito.atMost(1)).temEstoque(produto1,QTD_PARA_DAR_BAIXA_IGUAL_A_QTD_ESTOQUE_PRODUTO_1);
         Assertions.assertEquals(Boolean.TRUE,darBaixaEmEstoque);
 
     }
     @Test
-    @DisplayName("9- deve retornar false ao dar baixa em estoque por id")
-    void deveRetornarFalseAoDarBaixaEmEstoquePorId() throws ProdutoException {
+    @DisplayName("9- deve retornar true ao dar baixa em estoque por nome quando a quantidade para dar baixa é menor que a quantidade em estoque")
+    void deveRetornarTrueAoDarBaixaEmEstoquePorNomeQuandoQuantidadeParaDarBaixaÉMenorQueAQuantidadeEmEstoque() throws ProdutoException {
 
-        estoque.encontrarProdutoPorId(ID_PRODUTO_1);
+        Produto produto1 = estoque.encontrarProdutoPorNome(NOME_PRODUTO_1);
 
-        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorId(ID_PRODUTO_1,QTD_PARA_DAR_BAIXA_MENOR_A_QTD_ESTOQUE_PRODUTO_1);
+        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorNome(NOME_PRODUTO_1,QTD_PARA_DAR_BAIXA_MENOR_QUE_A_QTD_ESTOQUE_PRODUTO_1);
 
+        Mockito.verify(estoque,Mockito.atMost(1)).temEstoque(produto1,QTD_PARA_DAR_BAIXA_MENOR_QUE_A_QTD_ESTOQUE_PRODUTO_1);
+        Assertions.assertEquals(Boolean.TRUE,darBaixaEmEstoque);
+
+    }
+    @Test
+    @DisplayName("10- deve retornar false ao dar baixa em estoque por id quando a quantidade para dar baixa é maior que a quantidade em estoque")
+    void deveRetornarFalseAoDarBaixaEmEstoquePorIdQuandoQuantidadeParaDarBaixaÉMaiorQueAQuantidadeEmEstoque() throws ProdutoException {
+
+        Produto produto1 = estoque.encontrarProdutoPorId(ID_PRODUTO_1);
+
+        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorId(ID_PRODUTO_1, QTD_PARA_DAR_BAIXA_MAIOR_QUE_A_QTD_ESTOQUE_PRODUTO_1);
+
+        Mockito.verify(estoque,Mockito.atMost(1)).temEstoque(produto1,QTD_PARA_DAR_BAIXA_MAIOR_QUE_A_QTD_ESTOQUE_PRODUTO_1);
         Assertions.assertEquals(Boolean.FALSE,darBaixaEmEstoque);
 
     }
     @Test
-    @DisplayName("10- deve retornar true ao dar baixa em estoque por id")
-    void deveRetornarTrueAoDarBaixaEmEstoquePorId() throws ProdutoException {
+    @DisplayName("11- deve retornar true ao dar baixa em estoque por id quando a quantidade para dar baixa é igual a quantidade em estoque")
+    void deveRetornarTrueAoDarBaixaEmEstoquePorIdQuandoQuantidadeParaDarBaixaÉIgualQueAQuantidadeEmEstoque() throws ProdutoException {
 
-        estoque.encontrarProdutoPorId(ID_PRODUTO_1);
+        Produto produto1 = estoque.encontrarProdutoPorId(ID_PRODUTO_1);
 
-        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorId(ID_PRODUTO_1,QTD_PARA_DAR_BAIXA_MENOR_A_QTD_ESTOQUE_PRODUTO_1);
+        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorId(ID_PRODUTO_1, QTD_PARA_DAR_BAIXA_IGUAL_A_QTD_ESTOQUE_PRODUTO_1);
 
+        Mockito.verify(estoque,Mockito.atMost(1)).temEstoque(produto1,QTD_PARA_DAR_BAIXA_IGUAL_A_QTD_ESTOQUE_PRODUTO_1);
         Assertions.assertEquals(Boolean.TRUE,darBaixaEmEstoque);
 
     }
 
     @Test
-    @DisplayName("11- deve retornar posicao do produto")
+    @DisplayName("12- deve retornar true ao dar baixa em estoque por id quando a quantidade para dar baixa é menor que a quantidade em estoque")
+    void deveRetornarTrueAoDarBaixaEmEstoquePorIdQuandoQuantidadeParaDarBaixaÉMenorQueAQuantidadeEmEstoque() throws ProdutoException {
+
+        Produto produto1 = estoque.encontrarProdutoPorId(ID_PRODUTO_1);
+
+        Boolean darBaixaEmEstoque = estoque.darBaixaEmEstoquePorId(ID_PRODUTO_1, QTD_PARA_DAR_BAIXA_MENOR_QUE_A_QTD_ESTOQUE_PRODUTO_1);
+
+        Mockito.verify(estoque,Mockito.atMost(1)).temEstoque(produto1,QTD_PARA_DAR_BAIXA_MENOR_QUE_A_QTD_ESTOQUE_PRODUTO_1);
+        Assertions.assertEquals(Boolean.TRUE,darBaixaEmEstoque);
+
+    }
+
+    @Test
+    @DisplayName("13- deve retornar posicao do produto")
     void deveRetornarPosicaoDoProduto() throws ProdutoException {
 
-        Integer posicaoDoProdutoNaLista = estoque.getPosicaoDoProdutoNaLista(criarListaDeProdutos().getLast());
+        int posicaoDoProdutoNaLista = estoque.getPosicaoDoProdutoNaLista(criarListaDeProdutos().getLast());
 
         Assertions.assertEquals(2,posicaoDoProdutoNaLista);
 
