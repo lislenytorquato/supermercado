@@ -40,28 +40,28 @@ public class Estoque {
 
     }
     public boolean darBaixaEmEstoquePorNome(String nome, Integer quantidadePraDarBaixa) throws ProdutoException {
-        boolean darBaixaEmEstoque = false;
+
         Produto produtoParaDarBaixa = encontrarProdutoPorNome(nome);
         int quantidadeDeProdutos = produtoParaDarBaixa.getQuantidadeEmEstoque();
 
         if (temEstoque(produtoParaDarBaixa,quantidadePraDarBaixa)){
-             quantidadeDeProdutos -= quantidadePraDarBaixa;
-            darBaixaEmEstoque = true;
+            produtoParaDarBaixa.setQuantidadeEmEstoque(quantidadeDeProdutos-quantidadePraDarBaixa);
+            return true;
         }
 
-        return darBaixaEmEstoque;
+        return false;
     }
     public boolean darBaixaEmEstoquePorId(Integer id, Integer quantidadePraDarBaixa) throws ProdutoException {
-        boolean darBaixaEmEstoque = false;
+
         Produto produtoParaDarBaixa = encontrarProdutoPorId(id);
         int quantidadeDeProdutos = produtoParaDarBaixa.getQuantidadeEmEstoque();
 
         if (temEstoque(produtoParaDarBaixa,quantidadePraDarBaixa)){
-            quantidadeDeProdutos -= quantidadePraDarBaixa;
-            darBaixaEmEstoque = true;
+            produtoParaDarBaixa.setQuantidadeEmEstoque(quantidadeDeProdutos-quantidadePraDarBaixa);
+            return true;
         }
 
-        return darBaixaEmEstoque;
+        return false;
     }
     public int getQuantidadeAtualEmEstoque(Produto produto){
         return produto.getQuantidadeEmEstoque();
