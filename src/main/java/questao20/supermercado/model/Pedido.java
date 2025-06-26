@@ -33,10 +33,7 @@ public class Pedido {
             saidaImplement.imprimir("Saldo insuficiente");
             return 0.0;
         }
-
-        if (valorRecebido > valorTotalPedido){
             troco = valorRecebido - valorTotalPedido;
-        }
 
         if (Double.compare(troco,0.0) == 0){
            saidaImplement.imprimir("Sem troco");
