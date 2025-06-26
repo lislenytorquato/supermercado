@@ -26,14 +26,19 @@ public class Pedido {
 
    }
     public Double retornarTroco(Double valorRecebido){
-        Double troco = 0.0;
-        if (valorRecebido>this.getValorTotalDoPedido()){
-            troco = valorRecebido - this.getValorTotalDoPedido();
-        }
-        if (valorRecebido<this.getValorTotalDoPedido()){
+        double troco = 0.0;
+        Double valorTotalPedido = this.getValorTotalDoPedido();
+
+        if (valorRecebido < valorTotalPedido){
             saidaImplement.imprimir("Saldo insuficiente");
+            return 0.0;
         }
-        if (troco.equals(0.0)){
+
+        if (valorRecebido > valorTotalPedido){
+            troco = valorRecebido - valorTotalPedido;
+        }
+
+        if (Double.compare(troco,0.0) == 0){
            saidaImplement.imprimir("Sem troco");
         }
         return troco;
